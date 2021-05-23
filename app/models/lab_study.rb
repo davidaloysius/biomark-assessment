@@ -1,0 +1,2 @@
+class LabStudy < ApplicationRecord
+end

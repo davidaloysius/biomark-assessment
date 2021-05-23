@@ -24,13 +24,15 @@ config/master.key
 # Only include if you have production secrets in this file, which is no longer a Rails default
 # config/secrets.yml
 
-# dotenv
-# TODO Comment out this rule if environment variables can be committed
+# dotenv, dotenv-rails
+# TODO Comment out these rules if environment variables can be committed
 .env
+.env.*
 
 ## Environment normalization:
 /.bundle
 /vendor/bundle
+/vendor
 
 # these should all be checked in to normalize the environment:
 # Gemfile.lock, .ruby-version, .ruby-gemset
@@ -65,3 +67,4 @@ yarn-debug.log*
 # Ignore uploaded files in development
 /storage/*
 !/storage/.keep
+/public/uploads
