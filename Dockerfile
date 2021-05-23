@@ -1,13 +1,28 @@
-#1)Get base official image in docker hub for Ruby Rails
-#FROM base image
 FROM ruby:2.6.3
 
-#2)Clone git Repo using RUN
-RUN git clone https://github.com/davidaloysius/biomark-assessment.git
+RUN apt-get update && apt-get install -y \
+  build-essential \
+  nodejs
 
-#3)Create a workdir
 RUN mkdir -p /app
 WORKDIR /app
+
+RUN git clone https://github.com/davidaloysius/biomark-assessment.git
+
+WORKDIR /app/biomark-assessment
+
+COPY Gemfile Gemfile.lock ./
+
+RUN gem install bundler && \
+    bundle install && \
+    rails db:create && \
+    rails db:migrate RAILS_ENV=development
+
+COPY . ./
+
+EXPOSE 3000
+
+CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
 
 # FROM ruby:2.2
 # MAINTAINER marko@codeship.com
@@ -18,6 +33,7 @@ WORKDIR /app
 # RUN apt-get update && apt-get install -y \
 #   build-essential \
 #   nodejs
+
 # # Configure the main working directory. This is the base
 # # directory used in any further RUN, COPY, and ENTRYPOINT
 # # commands.
