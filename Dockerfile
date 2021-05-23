@@ -14,9 +14,7 @@ WORKDIR /app/biomark-assessment
 COPY Gemfile Gemfile.lock ./
 
 RUN gem install bundler && \
-    bundle install && \
-    rails db:create && \
-    rails db:migrate RAILS_ENV=development
+    bundle install
 
 COPY . ./
 
