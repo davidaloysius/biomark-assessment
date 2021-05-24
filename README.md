@@ -1,24 +1,82 @@
-# README
+## Overview
+Ruby 2.6.3\
+Postgres
+ 
+### Dependencies
+[Docker](https://www.docker.com/products/docker-desktop) is required to run this application.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## How to Run the Application
+### Getting the Code
+Clone the repository in your local machine
+```
+$ git clonehttps://github.com/davidaloysius/biomark-assessment.git
+$ cd biomark-assessment
+```
 
-Things you may want to cover:
+### Running the application
+After cloning the project, use these commands below to build and run the application. \
+Make sure that Docker is running before running these commands.
+```
+$ docker-compose build
+$ docker-compose up
+```
+### Database Set-up
+Open a new terminal then run the following commands to setup the database.
+```
+$ docker-compose run web rake db:create
+$ docker-compose run web rake db:migrate
+```
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### Calling the API
+Open any API Testing Tool (Postman, Insomnia)
+- Create a POST request using this endpoint [http://localhost:3000/patient_labs](http://localhost:3000/patient_labs)
+- You can choose this as the payload
+  ```
+  {
+    "date_of_test":"20210227134300",
+    "id_number":"IC000A2",
+    "patient_name":"Patient A4",
+    "gender":"F",
+    "date_of_birth":"19940231",
+    "lab_number":"QT196-21-124",
+    "clinic_code":"QT196",
+    "lab_studies":[
+      {
+        "code":"2085-9",
+        "name":"HDL Cholesterol",
+        "value":"cancel",
+        "unit":"mg/dL",
+        "ref_range":"> 59",
+        "finding":"A",
+        "result_state":"F"
+      }
+    ],
+  }
+  ```
+  OR
+  ```
+  {
+    "patient_data":{
+      "id_number":"IC000A3",
+      "first_name":"Patient",
+      "last_name":"A5",
+      "phone_mobile":"+6500000000",
+      "gender":"M",
+      "date_of_birth":"19940231",
+    },
+    "date_of_test":"20210227134300",
+    "lab_number":"QT196-21-124",
+    "clinic_code":"QT196",
+    "lab_studies":[
+      {
+        "code":"2085-9",
+        "name":"HDL Cholesterol",
+        "value":"cancel",
+        "unit":"mg/dL",
+        "ref_range":"> 59",
+        "finding":"A",
+        "result_state":"F"
+      }
+    ]
+  }
+  ```
